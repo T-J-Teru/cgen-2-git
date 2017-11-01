@@ -1,0 +1,221 @@
+# Lift commands for cgen
+
+#
+# These branches are all in a cluster around the original commit, but
+# I don't think they add anything of value.
+
+branch arc-insight_6_8-branch delete
+branch dje-cgen-play1-branch delete
+branch cagney_regbuf-20020515-branch delete
+branch msnyder-fork-checkpoint-branch delete
+branch sid-20020905-branch delete
+
+#
+# These branches all have just a single "fake" commit, but are
+# otherwise directly onto the master branch.  I think we should
+# be safe to delete these.
+
+branch gdb_5_2_1-2002-07-23-release delete
+branch kseitz_interps-20020528-branchpoint delete
+branch gdb_5_3-2002-12-12-release delete
+branch carlton_dictionary-20021115-merge delete
+branch carlton_dictionary-20030207-merge delete
+branch carlton_dictionary-20030305-merge delete
+branch cagney_lazyid-20030317-branchpoint delete
+branch cagney_frameaddr-20030409-mergepoint delete
+branch carlton_dictionary-20030430-merge delete
+branch jimb-ppc64-linux-20030509-branchpoint delete
+branch cagney_writestrings-20030508-branchpoint delete
+branch kettenis_i386newframe-20030517-mergepoint delete
+branch jimb-ppc64-linux-20030528-branchpoint delete
+branch cagney_convert-20030606-branchpoint delete
+branch gdb_6_0-2003-10-04-release delete
+branch carlton_dictionary-20030805-merge delete
+branch carlton-dictionary-20031111-merge delete
+branch cagney_x86i386-20030821-branchpoint delete
+branch drow-cplus-merge-20040208 delete
+branch cagney_tramp-20040309-branchpoint delete
+branch drow_intercu-merge-20040402 delete
+branch jimb-gdb_6_2-e500-branchpoint delete
+branch drow_intercu-merge-20040921 delete
+branch gdb-csl-arm-20051020-branchpoint delete
+
+
+#
+# The following branches really are directly onto the master
+# branch, without even th "fake" commit that we see above.
+
+branch cagney-unwind-20030108-branch delete
+branch cagney_bfdfile-20040213-branch delete
+branch cagney_bigcore-20040122-branch delete
+branch cagney_convert-20030606-branch delete
+branch cagney_fileio-20030521-branch delete
+branch cagney_frameaddr-20030403-branch delete
+branch cagney_framebase-20030326-branch delete
+branch cagney_lazyid-20030317-branch delete
+branch cagney_offbyone-20030303-branch delete
+branch cagney_sysregs-20020825-branch delete
+branch cagney_writestrings-20030508-branch delete
+branch cagney_x86i386-20030821-branch delete
+branch ezannoni_pie-20030916-branch delete
+branch ezannoni_pie-20040323-branch delete
+branch gdb-csl-arm-20051020-branch delete
+branch gdb_5_2-branch delete
+branch gdb_5_3-branch delete
+branch gdb_6_0-branch delete
+branch gdb_6_1-branch delete
+branch gdb_6_2-branch delete
+branch interps-20030202-branch delete
+branch jimb-gdb_6_2-e500-branch delete
+branch jimb-macro-020506-branch delete
+branch jimb-ppc64-linux-20030509-branch delete
+branch jimb-ppc64-linux-20030528-branch delete
+branch jimb-ppc64-linux-20030613-branch delete
+branch kettenis-i386newframe-20030308-branch delete
+branch kettenis_i386newframe-20030406-branch delete
+branch kettenis_sparc-20030918-branch delete
+branch offbyone-20030313-branch delete
+branch readline_4_3-import-branch delete
+
+#
+# After looking at the content of the following branches, I don't
+# see a significant benefit to keeping them.
+
+branch gdb_7_3-branch delete
+branch cagney_tramp-20040309-branch delete
+branch carlton_dictionary-branch delete
+branch drow-cplus-branch delete
+branch drow-cplus-merge-20031214 delete
+branch drow_intercu-20040221-branch delete
+branch kettenis_i386newframe-20030419-branch delete
+branch kseitz_interps-20020528-branch delete
+
+#
+# Don't think these tags are needed anymore.
+tag arc-insight_6_8-branchpoint delete
+tag cagney_regbuf-20020515-branchpoint delete
+tag cygnus_cvs_20020108_pre delete
+tag dje-cgen-play1-branchpoint delete
+tag msnyder-fork-checkpoint-branchpoint delete
+tag sid-20020905-branchpoint delete
+tag sid-snapshot-20071001 delete
+tag sid-snapshot-20071101 delete
+tag sid-snapshot-20071201 delete
+tag sid-snapshot-20080101 delete
+tag sid-snapshot-20080201 delete
+tag sid-snapshot-20080301 delete
+tag sid-snapshot-20080401 delete
+tag sid-snapshot-20080403 delete
+tag sid-snapshot-20080501 delete
+tag sid-snapshot-20080601 delete
+tag sid-snapshot-20080701 delete
+tag sid-snapshot-20080801 delete
+tag sid-snapshot-20080901 delete
+tag sid-snapshot-20081001 delete
+tag sid-snapshot-20081101 delete
+tag sid-snapshot-20081201 delete
+tag sid-snapshot-20090101 delete
+tag sid-snapshot-20090201 delete
+tag sid-snapshot-20090301 delete
+tag sid-snapshot-20090401 delete
+tag sid-snapshot-20090501 delete
+tag sid-snapshot-20090601 delete
+tag sid-snapshot-20090701 delete
+tag sid-snapshot-20090801 delete
+tag sid-snapshot-20090901 delete
+tag sid-snapshot-20091001 delete
+tag sid-snapshot-20091101 delete
+tag sid-snapshot-20091201 delete
+tag sid-snapshot-20100101 delete
+tag sid-snapshot-20100201 delete
+tag sid-snapshot-20100301 delete
+tag sid-snapshot-20100401 delete
+tag sid-snapshot-20100501 delete
+tag sid-snapshot-20100601 delete
+tag sid-snapshot-20100701 delete
+tag sid-snapshot-20100801 delete
+tag sid-snapshot-20100901 delete
+tag sid-snapshot-20101001 delete
+tag sid-snapshot-20101101 delete
+tag sid-snapshot-20101201 delete
+tag sid-snapshot-20110101 delete
+tag sid-snapshot-20110201 delete
+tag sid-snapshot-20110301 delete
+tag sid-snapshot-20110401 delete
+tag sid-snapshot-20110501 delete
+tag sid-snapshot-20110601 delete
+tag sid-snapshot-20110701 delete
+tag sid-snapshot-20110801 delete
+tag sid-snapshot-20110901 delete
+tag sid-snapshot-20111001 delete
+tag sid-snapshot-20111101 delete
+tag sid-snapshot-20111201 delete
+tag sid-snapshot-20120101 delete
+tag sid-snapshot-20120201 delete
+tag sid-snapshot-20120301 delete
+tag sid-snapshot-20120401 delete
+tag sid-snapshot-20120501 delete
+tag sid-snapshot-20120601 delete
+tag sid-snapshot-20120701 delete
+tag sid-snapshot-20120801 delete
+tag sid-snapshot-20120901 delete
+tag sid-snapshot-20121001 delete
+tag sid-snapshot-20121101 delete
+tag sid-snapshot-20121201 delete
+tag sid-snapshot-20130101 delete
+tag sid-snapshot-20130201 delete
+tag sid-snapshot-20130301 delete
+tag sid-snapshot-20130401 delete
+tag sid-snapshot-20130501 delete
+tag sid-snapshot-20130601 delete
+tag sid-snapshot-20130701 delete
+tag sid-snapshot-20130801 delete
+tag sid-snapshot-20130901 delete
+tag sid-snapshot-20131001 delete
+tag sid-snapshot-20131101 delete
+tag sid-snapshot-20131201 delete
+tag sid-snapshot-20140101 delete
+tag sid-snapshot-20140201 delete
+tag sid-snapshot-20140301 delete
+tag sid-snapshot-20140401 delete
+tag sid-snapshot-20140501 delete
+tag sid-snapshot-20140601 delete
+tag sid-snapshot-20140701 delete
+tag sid-snapshot-20140801 delete
+tag sid-snapshot-20140901 delete
+tag sid-snapshot-20141001 delete
+tag sid-snapshot-20141101 delete
+tag sid-snapshot-20141201 delete
+tag sid-snapshot-20150101 delete
+tag sid-snapshot-20150201 delete
+tag sid-snapshot-20150301 delete
+tag sid-snapshot-20150401 delete
+tag sid-snapshot-20150501 delete
+tag sid-snapshot-20150601 delete
+tag sid-snapshot-20150701 delete
+tag sid-snapshot-20150801 delete
+tag sid-snapshot-20150901 delete
+tag sid-snapshot-20151001 delete
+tag sid-snapshot-20151101 delete
+tag sid-snapshot-20151201 delete
+tag sid-snapshot-20160101 delete
+tag sid-snapshot-20160201 delete
+tag sid-snapshot-20160301 delete
+tag sid-snapshot-20160401 delete
+tag sid-snapshot-20160501 delete
+tag sid-snapshot-20160601 delete
+tag sid-snapshot-20160701 delete
+tag sid-snapshot-20160801 delete
+tag sid-snapshot-20160901 delete
+tag sid-snapshot-20161101 delete
+tag sid-snapshot-20161201 delete
+tag sid-snapshot-20170101 delete
+tag sid-snapshot-20170201 delete
+tag sid-snapshot-20170301 delete
+tag sid-snapshot-20170401 delete
+tag sid-snapshot-20170501 delete
+tag sid-snapshot-20170601 delete
+tag sid-snapshot-20170701 delete
+tag sid-snapshot-20170801 delete
+tag sid-snapshot-20170901 delete
+tag sid-snapshot-20171001 delete

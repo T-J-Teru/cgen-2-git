@@ -1,0 +1,31 @@
+s#kettenis = kettenis <kettenis>#kettenis = Mark Kettenis <mark DOT kettenis AT xs4all DOT nl>#
+s#bje = bje <bje>#bje = Ben Elliston <bje AT redhat DOT com>#
+s#carlton = carlton <carlton>#carlton = David Carlton <carlton AT sources DOT redhat DOT com>#
+s#dj = dj <dj>#dj = DJ Delorie <dj AT redhat DOT com>#
+s#brobecke = brobecke <brobecke>#brobecke = Joel Brobecker <brobecker AT adacore DOT com>#
+s#vapier = vapier <vapier>#vapier = Mike Frysinger <vapier AT gentoo DOT org>#
+s#jimb = jimb <jimb>#jimb = Jim Blandy <jimb AT redhat DOT com>#
+s#zack = zack <zack>#zack =  Zack Weinberg <zack AT sourceware DOT org>#
+s#brolley = brolley <brolley>#brolley = Dave Brolley <brolley AT redhat DOT com>#
+s#patrickm = patrickm <patrickm>#patrickm = Patrick Macdonald <patrickm AT redhat DOT com>#
+s#fche = fche <fche>#fche = Frank Ch. Eigler <fche AT redhat DOT com>#
+s#gkm = gkm <gkm>#gkm =   Glen McCready <gkm AT cygnus DOT com>#
+s#nickc = nickc <nickc>#nickc = Nicholas Clifton <nickc AT redhat DOT com>#
+s#scox = scox <scox>#scox = Stan Cox <scox AT redhat DOT com>#
+s#graydon = graydon <graydon>#graydon = Graydon Hoare <graydon AT redhat DOT com>#
+s#amylaar = amylaar <amylaar>#amylaar = Joern Wolfgang Rennecke <gnu AT amylaar DOT uk>#
+s#jrydberg = jrydberg <jrydberg>#jrydberg = Johan Rydberg <johan DOT rydberg AT netinsight DOT se>#
+s#hp = hp <hp>#hp = Hans-Peter Nilsson <hans-peter DOT nilsson AT axis DOT com>#
+s#cgf = cgf <cgf>#cgf = Christopher G. Faylor <cgf AT sourceware DOT org>#
+s#kseitz = kseitz <kseitz>#kseitz = Keith Seitz <keiths AT redhat DOT com>#
+s#cvs-fast-export = cvs-fast-export <cvs-fast-export>#cvs-fast-export = cvs-fast-export <cvs-fast-export>#
+s#devans = devans <devans>#devans = Doug Evans <dje AT google DOT com>#
+s#nathan = nathan <nathan>#nathan = Nathan Sidwell <nathan AT codesourcery DOT com>#
+s#geoffk = geoffk <geoffk>#geoffk = Geoff Keating <geoffk AT geoffk DOT org>#
+s#cagney = cagney <cagney>#cagney = Andrew Cagney <ac131313 AT redhat DOT com>#
+s#drow = drow <drow>#drow = Daniel Jacobowitz <drow AT mvista DOT com>#
+s#jjohnstn = jjohnstn <jjohnstn>#jjohnstn = "J. Johnston" <jjohnstn AT cygnus DOT com>#
+s#mrs = mrs <mrs>#mrs = Mike Stump <mikestump AT comcast DOT net>#
+s#mrg = mrg <mrg>#mrg = Matthew Green <mrg AT redhat DOT com>#
+s#amodra = amodra <amodra>#amodra = Alan Modra <amodra AT gmail DOT com>#
+s#sje = sje <sje>#sje = Steve Ellcey <sje AT cup DOT hp DOT com>#
