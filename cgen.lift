@@ -1,6 +1,14 @@
 # Lift commands for cgen
 
 #
+# These two branches are a legacy part of importing the 1.1 release
+# branch into the cgen repository.  Both of these branches are
+# ancestors of the actual 1.1 release branch, and so I'm deleting
+# them.
+branch cgen-1-1-branch delete
+branch import-1.1.1 delete
+
+#
 # These branches are all in a cluster around the original commit, but
 # I don't think they add anything of value.
 
@@ -39,7 +47,6 @@ branch drow_intercu-merge-20040402 delete
 branch jimb-gdb_6_2-e500-branchpoint delete
 branch drow_intercu-merge-20040921 delete
 branch gdb-csl-arm-20051020-branchpoint delete
-
 
 #
 # The following branches really are directly onto the master
@@ -91,7 +98,10 @@ branch kettenis_i386newframe-20030419-branch delete
 branch kseitz_interps-20020528-branch delete
 
 #
-# Don't think these tags are needed anymore.
+# Don't think these tags are needed anymore.  It would be nice if we
+# could regexp the deletion of all the sid-snapshot-* tags, but so far
+# I've been unable to find a way to make that work.
+
 tag arc-insight_6_8-branchpoint delete
 tag cagney_regbuf-20020515-branchpoint delete
 tag cygnus_cvs_20020108_pre delete
@@ -219,3 +229,29 @@ tag sid-snapshot-20170701 delete
 tag sid-snapshot-20170801 delete
 tag sid-snapshot-20170901 delete
 tag sid-snapshot-20171001 delete
+tag sid-snapshot-20171101 delete
+tag sid-snapshot-20171201 delete
+tag sid-snapshot-20180101 delete
+tag sid-snapshot-20180201 delete
+tag sid-snapshot-20180301 delete
+tag sid-snapshot-20180401 delete
+tag sid-snapshot-20180501 delete
+tag sid-snapshot-20180601 delete
+
+#
+# This fixes the 1.1 branch, which is rooted in the wrong place for
+# some reason.
+
+<2009-06-20T21:34:28Z>,<2009-06-20T22:02:05Z> reparent
+
+#
+# Tag the 1.1 release
+
+<2009-08-22T18:06:29Z> reset refs/tags/cgen-1-1 create
+
+#
+# Delete the tag from the 1.1 branchpoint.  This is trivial to
+# establish with git, and maintaining the tag is just unneeded
+# clutter.
+
+tag cgen-1_1-branchpoint delete
