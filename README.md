@@ -74,7 +74,16 @@ identical between CVS and git.
 
 ### Tip Of Branch Comparisons
 
-**TODO**
+There are only two branches, `master`, which needs to be compared with
+the main branch from cvs, and the `cgen-1_1-branch` branch which is
+present in both git and cvs.
+
+Both of these comparisons were done by manually checking out the
+required branch from cvs and git and comparing.  There are no
+differences.
+
+This check is part of the automated `convert.sh` script, if the
+`--validate` argument is passed.
 
 ### Tag Comparisons
 
@@ -85,8 +94,7 @@ Downloaded the CGEN 1.0 release tar file from:
   ftp://sourceware.org/pub/cgen/releases/cgen-1.0.tar.gz
 
 unpacked it, and then compared the cgen/ subdirectory in the release
-with a git checkout of the cgen-1-0 tag.  The only difference was that
-the git repository has a `.gitignore` file.
+with a git checkout of the cgen-1-0 tag.  There are no differences.
 
 #### cgen-1-1
 
@@ -95,8 +103,7 @@ Downloaded the CGEN 1.1 release tar file from:
   ftp://sourceware.org/pub/cgen/releases/cgen-1.1.tar.gz
 
 unpacked it, and then compared the cgen/ subdirectory in the release
-with a git checkout of the cgen-1-1 tag.  The only difference was that
-the git repository has a `.gitignore` file.
+with a git checkout of the cgen-1-1 tag.  There are no differences.
 
 #### Comparison Against CVS
 
@@ -104,11 +111,13 @@ I checked out all of the tags `cgen-1-0`, and `cgen-snapshot-*` in
 both CVS and git, and compared the checkouts, excluding `CVS` and
 `.git` directories.
 
-The only difference in any checkout was that the git repository had a
-`.gitignore` file.
-
 The `cgen-1-1` tag can't be compared as this is a tag I have created
 as part of the conversion from CVS to git.
+
+There were no differences.
+
+This check is part of the automated `convert.sh` script, if the
+`--validate` argument is passed.
 
 ## Code Execution Tests
 
@@ -228,6 +237,70 @@ make stamp-arch stamp-cpu
 
 See [sid](https://sourceware.org/sid/).
 
-**TODO** This still needs to be done.  The sid project seems to be
-even less actively developed than CGEN, but we probably should still
-check that the generated source can still be generated.
+The instructions for sid on the project page are out of date.  You'll
+need to fetch the sources from sourceware.org, not sources.redhat.com
+as they suggest.
+
+With the checkout complete you'll find that sid comes complete with a
+cgen checkout from CVS.
+
+In order to regenerate the sid sources correctly we need to copy
+around some of the cpu descriptions, so, from the root of the source
+checkout:
+
+```
+cp cpu/mep* cgen/cpu/
+cp cpu/xstormy16* cgen/cpu/
+```
+
+Now create a build directory, and configure sid, this should be done
+outside of the source checkout:
+
+```
+mkdir build
+cd build
+../src/configure --enable-targets=all --enable-cgen-maint
+make all-sid
+```
+
+The last make will most likely fail unless you have a very old
+compiler.  Non of the tools I had sitting around were able to build
+sid, however, I don't think this matters.
+
+Once the complete build tree has been configured as part of the failed
+make attempt, we can regenerate the cgen source.  Again, from the
+build directory, run:
+
+```
+make -C sid/component/cgen-cpu/ cgen-all
+```
+
+This should regenerate all of the cgen components within sid using the
+current cgen (from cvs).  The only differences I saw were that the
+copyright dates changed (to include current year), and the extra file
+`sid/component/cgen-cpu/m32r/m32r-write.cxx` was created.  As all the
+other targets appear to have their own version of this file my current
+assumption is that this was missed from a CVS commit at some point.
+
+After this delete the cgen directory out of the source tree, and copy
+in the current HEAD of the git master branch.  Then recopy the missing
+cpu descriptions, and repeat the configure and build steps.
+
+The end result is that the regenerated sid sources are identical using
+the CVS repository and when using the git conversion copied into the
+sid tree.
+
+Currently there is no patch for sid to support using out of tree cgen.
+The last real commit to sid was in 2001, and the last maintenance
+commit was in 2007.  Since then sid has been dormant, and so I'm
+reluctant to invest time in fixing the build system, however, it would
+seem surprising if this proved to be a difficult task, considering how
+easy it was for the opcodes/ and sim/ directories.
+
+#### Results
+
+Using the latest version of cgen from CVS and the HEAD of the master
+branch from the cvs to git conversion, the generated source components
+of sid are identical.  These generated components are (other than
+trivial comment changes) identical to the source components currently
+checked into CVS.

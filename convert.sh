@@ -9,6 +9,8 @@ function usage () {
     echo
     echo "Usage: ./convert.sh --working-dir <working_dir>"
     echo "                    [--help]"
+    echo "                    [--validate]"
+    echo "                    [--no-rsync]"
 
     exit 1
 }
@@ -119,6 +121,8 @@ function times_to_time_string ()
 SCRIPT_DIR=$(cd "`dirname \"$0\"`"; pwd)
 LOGFILE=
 WORKING_DIR=
+DO_VALIDATION=no
+DO_RSYNC=yes
 
 #=====================================================================
 
@@ -134,6 +138,14 @@ case ${opt} in
 
     --help)
         usage
+        ;;
+
+    --validate)
+        DO_VALIDATION=yes
+        ;;
+
+    --no-rsync)
+        DO_RSYNC=no
         ;;
 
     ?*)
@@ -172,19 +184,23 @@ DATE_STRING=$(date +%F-%H%M)
 LOGFILE=${LOGDIR}/conversion-${DATE_STRING}.log
 CONVERSION_TAR_FILE=${WORKING_DIR}/conversion-mirror-${DATE_STRING}.tar.xz
 CONVERSION_DIR=${WORKING_DIR}/conversion-${DATE_STRING}
+GIT_DIR=${CONVERSION_DIR}/cgen-git
 
 #=====================================================================
 
-job_start "rsyncing from sourceware.org"
-
-if ! run_command rsync -avz \
-                 --exclude-from=${SCRIPT_DIR}/rsync-exclude-list \
-                 sourceware.org::src-cvs cgen-mirror
+if [ x${DO_RSYNC} == "xyes" ]
 then
-    error "failed to rsync cgen from sourceware.org"
-fi
+    job_start "rsyncing from sourceware.org"
 
-job_done
+    if ! run_command rsync -avz \
+         --exclude-from=${SCRIPT_DIR}/rsync-exclude-list \
+         sourceware.org::src-cvs cgen-mirror
+    then
+        error "failed to rsync cgen from sourceware.org"
+    fi
+
+    job_done
+fi
 
 #=====================================================================
 
@@ -316,3 +332,101 @@ then
 fi
 
 job_done
+
+#=====================================================================
+
+# Reposurgeon seems to add a .gitignore file into the repository.  Not
+# entirely sure of the reasoning behind this, but removing it seems to still
+# leave the repository in a good state, so lets do that.
+
+job_start "remove .gitignore file"
+
+pushd ${GIT_DIR} &>/dev/null
+
+run_command git filter-branch --force --index-filter \
+            "git rm --cached --ignore-unmatch $(find . -name .gitignore|xargs )"  \
+            --prune-empty --tag-name-filter cat -- --all
+
+popd &>/dev/null
+
+job_done
+
+#=====================================================================
+#               Optional Stage: Validation
+
+if [ x$DO_VALIDATION == xyes ]
+then
+    # In theory reposurgeon has support for checking branches and
+    # tags, however, in my experience, this doesn't seem to work.  For
+    # now I'm writing my own validation.
+
+    job_start "tag validation"
+
+    # A list of all the tags we plan to validate.
+    VALIDATION_LIST=${CONVERSION_DIR}/version.list
+
+    (cd ${GIT_DIR} && git checkout master) &>/dev/null
+    (cd ${GIT_DIR} && git tag -l > ${VALIDATION_LIST}) &>/dev/null
+    (cd ${GIT_DIR} && git branch -a --format="%(refname:short)" >> ${VALIDATION_LIST}) &>/dev/null
+
+    # Remove a tag that we added to git during the conversion.
+    sed -i -e '/^cgen-1-1$/d' ${VALIDATION_LIST}
+
+    # A second log file to hold a more detailed view of the validation.
+    VALIDATION_LOG=${CONVERSION_DIR}/tag-comparison
+    echo "" > ${VALIDATION_LOG}
+
+    ORIG_LOGFILE=${LOGFILE}
+    LOGFILE=${VALIDATION_LOG}
+
+    COMPARE_OK=yes
+
+    for VER in `cat ${VALIDATION_LIST}`
+    do
+        # Record the tags in both log files.
+        echo "Tag: ${VER}" >> ${VALIDATION_LOG}
+        echo -n -e "Tag: ${VER}\t" >> ${ORIG_LOGFILE}
+
+        # Checkout the branch or tag in git.
+        pushd ${GIT_DIR} &>/dev/null
+        run_command git checkout ${VER}
+        popd &>/dev/null
+
+        CVS_REVISION=""
+        if [ "${VER}" != "master" ]
+        then
+            CVS_REVISION="-r ${VER}"
+        fi
+
+        CVS_CO_DIR=${CONVERSION_DIR}/cvs-checkout
+
+        # Now checkout the same branch or tag from cvs.
+        run_command cvs -Q -d:local:${CONVERSION_DIR}/cgen-mirror co \
+                    -P -d ${CVS_CO_DIR} ${CVS_REVISION} \
+                    -kb cgen
+
+        # Now perform the comparison, ignoring some obvious things.
+        run_command diff --exclude=CVS --exclude=.git \
+                         -r ${GIT_DIR} ${CVS_CO_DIR}
+
+        if [ $? == 0 ]
+        then
+            echo "OK" >> ${ORIG_LOGFILE}
+        else
+            echo "FAILED" >> ${ORIG_LOGFILE}
+            COMPARE_OK=no
+        fi
+
+        # Delete the cvs checkout completely.
+        run_command rm -fr ${CVS_CO_DIR}
+    done
+
+    LOGFILE=${ORIG_LOGFILE}
+
+    if [ x${COMPARE_OK} != xyes ]
+    then
+        error "tag comparison failed"
+    fi
+
+    job_done
+fi
