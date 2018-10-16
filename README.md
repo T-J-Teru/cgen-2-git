@@ -70,7 +70,37 @@ repository is correct.  It's not clear to me how much of the testing
 below is required, if we can show that the contents of each branch are
 identical between CVS and git.
 
-## Code Comparison Tests
+## Comparison Of Past Release Files
+
+The past release tar files include more than just the cgen
+subdirectory.  They include the top level repository infrastructure
+that was shared with all of the tools that used to live in the old cvs
+repository.
+
+As part of this git conversion the assumption is being made that non
+of this additional infrastructure is really needed to cgen, and has
+been discarded.  As a result, when looking at the past release tar
+files only the `cgen/` subdirectory of the release can be compared.
+
+### cgen-1-0
+
+Downloaded the CGEN 1.0 release tar file from:
+
+  ftp://sourceware.org/pub/cgen/releases/cgen-1.0.tar.gz
+
+unpacked it, and then compared the `cgen/` subdirectory in the release
+with a git checkout of the cgen-1-0 tag.  There are no differences.
+
+### cgen-1-1
+
+Downloaded the CGEN 1.1 release tar file from:
+
+  ftp://sourceware.org/pub/cgen/releases/cgen-1.1.tar.gz
+
+unpacked it, and then compared the `cgen/` subdirectory in the release
+with a git checkout of the cgen-1-1 tag.  There are no differences.
+
+## Comparison Of Branches And Tags In Version Control
 
 ### Tip Of Branch Comparisons
 
@@ -86,26 +116,6 @@ This check is part of the automated `convert.sh` script, if the
 `--validate` argument is passed.
 
 ### Tag Comparisons
-
-#### cgen-1-0
-
-Downloaded the CGEN 1.0 release tar file from:
-
-  ftp://sourceware.org/pub/cgen/releases/cgen-1.0.tar.gz
-
-unpacked it, and then compared the cgen/ subdirectory in the release
-with a git checkout of the cgen-1-0 tag.  There are no differences.
-
-#### cgen-1-1
-
-Downloaded the CGEN 1.1 release tar file from:
-
-  ftp://sourceware.org/pub/cgen/releases/cgen-1.1.tar.gz
-
-unpacked it, and then compared the cgen/ subdirectory in the release
-with a git checkout of the cgen-1-1 tag.  There are no differences.
-
-#### Comparison Against CVS
 
 I checked out all of the tags `cgen-1-0`, and `cgen-snapshot-*` in
 both CVS and git, and compared the checkouts, excluding `CVS` and
