@@ -45,6 +45,20 @@ updated by the `conversion.sh` script.
 The output of the conversion is in the `cgen-git` directory, this is
 the newly created git repository.
 
+### Username To Email Mapping
+
+The CVS repository tags commits with usernames, while git can hold an
+author name and email address.
+
+During the conversion we extract all of the usernames from CVS, the
+`fix-map-script` file contains a set of patterns that are used to
+convert the usernames to name and email pairs.  These names and emails
+are used when creating the git repository.
+
+The names and emails were harvested from the cgen, binutils, and/or
+gdb mailing lists.  One potential issue is that the email I found for
+a person, might not be an email they want associated with CGEN work.
+
 # Branch And Tag List
 
 ## Branches
