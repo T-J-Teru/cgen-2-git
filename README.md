@@ -171,11 +171,10 @@ directory that doesn't exist in a standard `binuils-gdb` clone.  Then:
 cd build
 ../src/configure --enable-cgen-maint
 make all-opcodes
-cd opcodes
-make stamp-epiphany stamp-fr30 stamp-frv stamp-ip2k \
-     stamp-iq2000 stamp-lm32 stamp-m32c stamp-m32r \
-     stamp-mep stamp-mt stamp-or1k stamp-xc16x \
-     stamp-xstormy16
+make -C opcodes stamp-epiphany stamp-fr30 stamp-frv stamp-ip2k \
+                stamp-iq2000 stamp-lm32 stamp-m32c stamp-m32r \
+                stamp-mep stamp-mt stamp-or1k stamp-xc16x \
+                stamp-xstormy16
 ```
 
 This will regenerate all of the libopcodes source files.  Repeat this
@@ -192,16 +191,19 @@ copied into the binutils-gdb tree.
 cd build      # Enter the binutils-gdb build directory.
 ../src/configure --enable-cgen-maint=/path/to/cgen
 make all-opcodes
-cd opcodes
-make stamp-epiphany stamp-fr30 stamp-frv stamp-ip2k \
-     stamp-iq2000 stamp-lm32 stamp-m32c stamp-m32r \
-     stamp-mep stamp-mt stamp-or1k stamp-xc16x \
-     stamp-xstormy16
+make -C opcodes stamp-epiphany stamp-fr30 stamp-frv stamp-ip2k \
+                stamp-iq2000 stamp-lm32 stamp-m32c stamp-m32r \
+                stamp-mep stamp-mt stamp-or1k stamp-xc16x \
+                stamp-xstormy16
 ```
 
 #### Results
 
-**TODO** - Run tests, and add results.
+Using both cvs and git, both in tree and out of tree, the results are
+the same.
+
+The regenerated source files are identical to the versions already
+committed into binutils-gdb.
 
 ### Generating libsim Source in binutils-gdb
 
@@ -216,14 +218,24 @@ I think that the only simulator targets that currently use CGEN are:
 * `m32r`
 * `sh64`
 
-To regenerate the simulator souce files using cgen, you'll need to,
-for each target:
+To regenerate the simulator source files using cgen we will configure
+for a suitable target and then rebuild the simulator.  This should
+trigger regeneration of all cgen source files.  The targets we will
+configure for are:
+
+* `cris-elf`
+* `frv-elf`
+* `iq2000-elf`
+* `lm32-elf`
+* `m32r-elf`
+
+The `sh64` target is currently in the process of being removed from
+the binutils-gdb, attempting to configure for this target in the bfd/
+subdirectory will give an error about the target having been removed.
 
 ```
 ../src/configure --target=TARGET --enable-cgen-maint
 make all-sim
-cd sim
-make stamp-arch stamp-cpu
 ```
 
 #### Building with out of tree CGEN
@@ -232,16 +244,47 @@ As with regenerating libopcodes, with the binutils-gdb patch applied
 cgen can be located outside of the binutils-gdb tree, but otherwise
 the instructions are unchanged:
 
+**NOTE:** The `cris-elf` target requires an extra patch, this has not
+yet been submitted upstream, and is included in this repository as
+`cris-sim.patch` for now.
+
 ```
 ../src/configure --target=TARGET --enable-cgen-maint=/path/to/cgen
 make all-sim
-cd sim
-make stamp-arch stamp-cpu
 ```
+
+#### Validating For sh64
+
+Despite having been removed from bfd/ we can still check that the sh64
+source files are regenerated correctly.  We just need to follow a
+slightly different process.
+
+First, configure with either in tree or out of tree cgen as before,
+passing `--target=sh64` to configure, and then:
+
+```
+make configure-sim
+make -C sim/sh64 stamp-all
+```
+
+This should trigger the regeneration of the cgen components.
 
 #### Results
 
-**TODO** - Run tests, and add results.
+For all targets, the files regenerated using the latest CVS commit
+don't exactly match the versions committed into the sim/ directory.
+The files regenerated using out of tree CVS are identical to the files
+regenerated using in tree CVS.
+
+The differences between what is checked into the sim/ directory, and
+what is regenerated is more than just comments, though it is unclear
+how significant these changes are.  All of the targets other than
+`sh64` build successfully, even with the regenerated source, so that's
+something.
+
+The files regenerate when using the git conversions exactly match the
+files regenerated when using CVS, so, as far as the git conversion is
+concerned, I believe that we are fine.
 
 ### Generating sid Source
 
