@@ -162,6 +162,19 @@ done
 
 #=====================================================================
 
+# Check that some required tools are available, otherwise bail out
+# early.
+
+for tool in cvs-fast-export repotool
+do
+    if ! which $tool 2>/dev/null >/dev/null
+    then
+        error "couldn't find '$tool' in \$PATH"
+    fi
+done
+
+#=====================================================================
+
 if [ -z "${WORKING_DIR}" ]
 then
     usage "No working directory specified"
